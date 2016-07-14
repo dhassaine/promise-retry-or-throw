@@ -1,7 +1,13 @@
 # promise-retry-or-throw
 Simple wrapper for retrying a promise
 
+## Installation
+
+`$ npm install promise-retry-or-throw`
+
 ## Usage
+`import promiseRetry from 'promise-retry-or-throw';`
+
 ### promiseRetry(fn, [options])
 Call `fn` promise until it resolves or the maximum number of retries is reached (or the rejected promise matches a given early termination filter).
 
