@@ -1,0 +1,15 @@
+{
+  "name": "promise-retry-or-throw",
+  "version": "1.0.0",
+  "description": "Promise retry",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha --compilers js:babel-register 'test/**/*.spec.js'"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "babel-preset-es2015": "^6.9.0",
+    "chai": "^3.5.0",
+    "mocha": "^2.5.3"
+  }
+}
