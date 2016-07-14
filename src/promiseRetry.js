@@ -1,13 +1,19 @@
 
 const defaultOptions = {
-    numberOfRetries: 1,
-    maxNumberOfRetries: 3,
-    delay: 1000,
-    delayIncrease: 1000,
-    filter: () => false
+  maxNumberOfRetries: 10,
+  delayIncrease: 1000,
+  filter: () => false
 };
 
-export default function retryOrThrow(actionPromise, options=Object.assign({}, defaultOptions) ) {
+export default function retryOrThrow(actionPromise, options = {}) {
+  const {
+    maxNumberOfRetries,
+    delayIncrease,
+    filter
+  } = Object.assign({}, defaultOptions, options);
+
+  let delay = delayIncrease;
+  let numberOfRetries = 1;
 
   return new Promise((resolve, reject) => {
     action();
@@ -16,23 +22,22 @@ export default function retryOrThrow(actionPromise, options=Object.assign({}, de
       actionPromise()
         .then((response) => resolve(response))
         .catch(error => {
-          if (options.filter(error)) {
-            return reject(new Error('reject message: Error matched filter'));
+          if (filter(error)) {
+            return reject(error);
           }
-          if (options.numberOfRetries >= options.maxNumberOfRetries) {
-            return reject(new Error('reject message: too many failed attempts'));
+          if (numberOfRetries >= maxNumberOfRetries) {
+            return reject(new Error('reject: too many failed attempts'));
           }
 
           incrementAttempt();
-          console.log('trying again');
-          setTimeout(() => action(), options.delay);
+          setTimeout(() => action(), delay);
         })
         .catch(reject);
     }
 
     function incrementAttempt() {
-      options.delay += options.delayIncrease;
-      options.numberOfRetries++;
+      delay += delayIncrease;
+      numberOfRetries++;
     }
   });
 }

@@ -2,19 +2,45 @@ import {assert} from 'chai';
 import promiseRetry from '../src/promiseRetry';
 
 describe('promise-retry-or-throw', function () {
-    it('works', function () {
-        const action = () => Promise.resolve();
+  it('Immediately resolves if action is successful', function () {
+    const action = () => Promise.resolve();
+    return promiseRetry(action);
+  });
 
-        return promiseRetry(action);
+  it('Can succeed after a few attempts', function () {
+    this.timeout(0);
+    const options = {
+      maxNumberOfRetries: 4,
+      delayIncrease: 1
+    }
 
-        
-    });
+    let attempt = 0;
+    return promiseRetry(makeThreeAttempts, options)
+      .then(() => assert.equal(attempt, 3));
 
-    it('works 2', function () {
-        const action = () => Promise.reject();
+    function makeThreeAttempts() {
+      attempt++;
+      return attempt == 3 ? Promise.resolve() : Promise.reject();
+    }
+  });
 
-        return promiseRetry(action);
+  it('Actions on some data are returned correctly', function() {
+    const data = [0, 1, 2];
+    const action = () => Promise.resolve(data);
+    return promiseRetry(action)
+      .then(response => assert.deepEqual(response, data));
+  });
 
-        
-    });
+  it('Can throw early if given an error filter function', function() {
+    const action = () => Promise.reject('test');
+    const options = {
+      filter: (error) => error == 'test'
+    }
+
+    return promiseRetry(action, options)
+      .then(() => {
+        throw new Error('promiseRetry should not have resolved')
+      })
+      .catch(error => assert.equal(error, 'test'));
+  });
 });
