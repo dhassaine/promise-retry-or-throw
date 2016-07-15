@@ -23,3 +23,19 @@ promiseRetry(action)
   .then(response => assert.deepEqual(response, data));
 ```
 
+## Early termination
+Some errors should be treated as unrecoverable and a retry should not be attempted. An optional `filter` function can be passed in which is expected to return a truthy value for an early termination.
+```
+const action = () => Promise.reject('test');
+
+const options = {
+  filter: (error) => error == 'test'
+}
+
+return promiseRetry(action, options)
+  .then(() => {
+    throw new Error('promiseRetry should not have resolved')
+  })
+  .catch(error => assert.equal(error, 'test'));
+```
+
