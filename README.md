@@ -15,7 +15,7 @@ Call `fn` promise until it resolves or the maximum number of retries is reached 
   - `maxNumberOfRetries` : Maximum number of attempts to be made before giving up. Default is `10`
   - `delayIncrease` : Time increase between each retry (in milliseconds). Default is `1000`
   - `filter` : An error filter to allow early termination, e.g. for unrecoverable errors. Default is `() => false`
-  - `calculateDelay` : A function for calculate the delay between each retry attempt. Default is to increment last delay by `delayIncrease`
+  - `calculateDelay` : A function for calculating the delay between each retry attempt. Default is to increment last delay by `delayIncrease`
 
 ## Simplest use case:
 ```
