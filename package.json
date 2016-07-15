@@ -1,19 +1,23 @@
 {
-  "name": "promise-retry-or-throw",
-  "version": "1.0.2",
-  "description": "Promise retry",
-  "main": "lib/index.js",
-  "scripts": {
-    "test": "./node_modules/mocha/bin/mocha --compilers js:babel-register 'test/**/*.spec.js'",
-    "build": "node_modules/babel-cli/bin/babel.js src --out-dir lib",
-    "prepublish": "npm run build"
-  },
-  "author": "Djamel Hassaine",
-  "license": "ISC",
-  "devDependencies": {
-    "babel-cli": "^6.10.1",
-    "babel-preset-es2015": "^6.9.0",
-    "chai": "^3.5.0",
-    "mocha": "^2.5.3"
-  }
+    "name": "promise-retry-or-throw",
+    "version": "1.0.3",
+    "description": "Promise retry",
+    "main": "lib/index.js",
+    "scripts": {
+        "test": "./node_modules/mocha/bin/mocha --compilers js:babel-register 'test/**/*.spec.js'",
+        "build": "node_modules/babel-cli/bin/babel.js src --out-dir lib",
+        "prepublish": "npm run build"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/dhassaine/promise-retry-or-throw"
+    },
+    "author": "Djamel Hassaine",
+    "license": "ISC",
+    "devDependencies": {
+        "babel-cli": "^6.10.1",
+        "babel-preset-es2015": "^6.9.0",
+        "chai": "^3.5.0",
+        "mocha": "^2.5.3"
+    }
 }
