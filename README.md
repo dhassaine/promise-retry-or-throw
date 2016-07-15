@@ -15,6 +15,7 @@ Call `fn` promise until it resolves or the maximum number of retries is reached 
   - `maxNumberOfRetries` : Maximum number of attempts to be made before giving up. Default is `10`
   - `delayIncrease` : Time increase between each retry (in milliseconds). Default is `1000`
   - `filter` : An error filter to allow early termination, e.g. for unrecoverable errors. Default is `() => false`
+  - `calculateDelay` : A function for calculate the delay between each retry attempt. Default is to increment last delay by `delayIncrease`
 
 ## Simplest use case:
 ```
@@ -37,5 +38,20 @@ return promiseRetry(action, options)
     throw new Error('promiseRetry should not have resolved')
   })
   .catch(error => assert.equal(error, 'test'));
+```
+
+## User defined delay strategy
+```
+const customDelayIncrease = ({delay, delayIncrease}) => {
+  return delay * delayIncrease;
+}
+
+const options = {
+  maxNumberOfRetries: 40
+  delayIncrease: 10,
+  calculateDelay: customDelayIncrease
+};
+
+return promiseRetry(action, options);
 ```
 
