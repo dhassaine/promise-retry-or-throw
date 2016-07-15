@@ -1,5 +1,5 @@
 import {assert} from 'chai';
-import promiseRetry from '../index';
+import promiseRetry from '../src/index';
 
 describe('promise-retry-or-throw', function () {
   it('Immediately resolves if action is successful', function () {
