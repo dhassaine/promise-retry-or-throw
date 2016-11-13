@@ -28,7 +28,7 @@ export default function retryOrThrow(actionPromise, options = {}) {
                         return reject(error);
                     }
                     if (numberOfRetries >= maxNumberOfRetries) {
-                        return reject(new Error('reject: too many failed attempts'));
+                        return reject(new Error(`reject: too many failed attempts: ${error}`));
                     }
 
                     delay = calculateDelay({delay, delayIncrease});
